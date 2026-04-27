@@ -3,9 +3,9 @@ import FormData from 'form-data';
 
 async function test() {
   try {
-    const loginRes = await axios.post('http://localhost:5000/api/auth/login', {
-      email: 'urvashi@gmail.com',
-      password: 'Pass@123'
+    const loginRes = await axios.post('http://localhost:5001/api/auth/login', {
+      email: 'admin@truetwist.com',
+      password: 'Admin@123'
     });
     const token = loginRes.data.token;
     console.log('Login successful');
@@ -23,7 +23,7 @@ async function test() {
     form.append('designation', 'dev');
     form.append('department', 'IT');
 
-    const res = await axios.post('http://localhost:5000/api/employees', form, {
+    const res = await axios.post('http://localhost:5001/api/employees', form, {
       headers: { 
         ...form.getHeaders(),
         Authorization: `Bearer ${token}`

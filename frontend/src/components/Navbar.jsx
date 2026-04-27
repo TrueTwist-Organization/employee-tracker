@@ -1,8 +1,10 @@
 import { Bell, Search, Settings } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export const Navbar = () => {
   const { user } = useAuth();
+  const settingsPath = user?.role === 'admin' ? '/admin/settings' : '/employee/settings';
 
   return (
     <header className="h-[88px] glass-dark border-b border-white/5 flex items-center justify-between px-10 shrink-0 sticky top-0 z-40 bg-[#020617]/50 backdrop-blur-3xl">
@@ -25,9 +27,9 @@ export const Navbar = () => {
           <Bell className="w-5 h-5 text-slate-400 group-hover:text-indigo-400 transition-colors" />
           <div className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full border border-black/50 shadow-[0_0_8px_rgba(244,63,94,0.8)] animate-pulse"></div>
         </button>
-        <button className="p-3 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all duration-300 group active:scale-95 shadow-sm">
+        <Link to={settingsPath} className="p-3 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all duration-300 group active:scale-95 shadow-sm">
           <Settings className="w-5 h-5 text-slate-400 group-hover:text-indigo-400 transition-colors rotate-0 group-hover:rotate-45 duration-500" />
-        </button>
+        </Link>
       </div>
     </header>
   );

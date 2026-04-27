@@ -1,26 +1,34 @@
-const mongoose = require('mongoose');
-const User = require('./models/User');
 const dotenv = require('dotenv');
+const bcrypt = require('bcryptjs');
+const { getSupabase, newId, requireData } = require('./supabase');
 
 dotenv.config();
 
+const ADMIN_EMAIL = 'admin@truetwist.com';
+const ADMIN_PASSWORD = 'Admin@123';
+const ADMIN_NAME = 'TrueTwist Admin';
+
 const seed = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/minihr');
-        console.log('MongoDB Connected for seeding...');
+        const supabase = getSupabase();
+        console.log('Supabase connected for seeding...');
 
-        const userExists = await User.findOne({ email: 'urvashi@gmail.com' });
+        const existingResult = await supabase.from('users').select('id').eq('email', ADMIN_EMAIL).maybeSingle();
+        const userExists = requireData(existingResult.data, existingResult.error);
         if (userExists) {
             console.log('User already exists!');
             process.exit(0);
         }
 
-        await User.create({
-            name: 'Urvashi',
-            email: 'urvashi@gmail.com',
-            password: 'Pass@123',
+        const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
+        const result = await supabase.from('users').insert({
+            id: newId(),
+            name: ADMIN_NAME,
+            email: ADMIN_EMAIL,
+            password: hashedPassword,
             role: 'admin'
         });
+        requireData(result.data, result.error);
 
         console.log('Admin user created successfully!');
         process.exit(0);

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
@@ -12,6 +12,7 @@ import { Navbar } from './components/Navbar';
 import EmployeeList from './pages/EmployeeList';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import AccountSettings from './pages/AccountSettings';
 
 const Layout = ({ children }) => {
   return (
@@ -42,6 +43,7 @@ const AppRoutes = () => {
         <Route path="/admin/attendance" element={<Layout><AttendanceCalendar /></Layout>} />
         <Route path="/admin/leaves" element={<Layout><LeaveRequests /></Layout>} />
         <Route path="/admin/salary" element={<Layout><SalarySlips /></Layout>} />
+        <Route path="/admin/settings" element={<Layout><AccountSettings /></Layout>} />
       </Route>
 
       {/* Employee Routes */}
@@ -50,6 +52,7 @@ const AppRoutes = () => {
         <Route path="/employee/profile" element={<Layout><EmployeeProfile userId={user?._id} /></Layout>} />
         <Route path="/employee/leaves" element={<Layout><LeaveRequests /></Layout>} />
         <Route path="/employee/salary" element={<Layout><SalarySlips /></Layout>} />
+        <Route path="/employee/settings" element={<Layout><AccountSettings /></Layout>} />
       </Route>
 
       <Route path="*" element={<Navigate to="/login" />} />
@@ -57,13 +60,16 @@ const AppRoutes = () => {
   );
 };
 
+/** Production builds use hash routes so static hosts (e.g. Vercel CDN) work without SPA rewrites. */
+const AppRouter = import.meta.env.PROD ? HashRouter : BrowserRouter;
+
 function App() {
   return (
-    <BrowserRouter>
+    <AppRouter>
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
-    </BrowserRouter>
+    </AppRouter>
   );
 }
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import API from '../api/axios';
+import { assetUrl } from '../utils/assetUrl';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay } from 'date-fns';
 import { 
   Building2, 
@@ -64,7 +65,7 @@ const EmployeeDashboard = () => {
   if (loading) return <div className="flex h-screen items-center justify-center"><Loader2 className="w-10 h-10 animate-spin text-primary" /></div>;
   if (!profile) return <div className="text-center p-10 text-slate-400">Profile Not Found</div>;
 
-  const photoUrl = profile.profilePhoto ? `http://localhost:5000/${profile.profilePhoto}` : null;
+  const photoUrl = assetUrl(profile.profilePhoto);
   const presentDays = attendance.filter(a => a.status === 'present').length;
   const absentDays = attendance.filter(a => a.status === 'absent').length;
   

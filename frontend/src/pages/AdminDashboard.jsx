@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import API from '../api/axios';
+import { assetUrl } from '../utils/assetUrl';
 import { Users, Briefcase, IndianRupee, Calendar as CalendarIcon, Loader2, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -116,7 +117,7 @@ const AdminDashboard = () => {
                 <div key={emp._id} className="flex items-center justify-between p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-800 transition-colors">
                   <div className="flex items-center gap-4">
                      <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 font-bold overflow-hidden">
-                       {emp.profilePhoto ? <img src={`http://localhost:5000/${emp.profilePhoto}`} className="w-full h-full object-cover" /> : emp.userId?.name?.charAt(0)}
+                       {emp.profilePhoto ? <img src={assetUrl(emp.profilePhoto) || ''} alt="" className="w-full h-full object-cover" /> : emp.userId?.name?.charAt(0)}
                      </div>
                      <div>
                        <p className="text-sm font-bold text-white">{emp.userId?.name}</p>

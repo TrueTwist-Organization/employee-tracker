@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const { getSupabase, requireData } = require('../supabase');
+const { mapUser } = require('../utils/supabaseMappers');
 
 const protect = async (req, res, next) => {
   let token;
@@ -8,7 +9,14 @@ const protect = async (req, res, next) => {
     try {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = await User.findById(decoded.id).select('-password');
+      const supabase = getSupabase();
+      const result = await supabase
+        .from('users')
+        .select('id,name,email,role')
+        .eq('id', decoded.id)
+        .maybeSingle();
+      const user = requireData(result.data, result.error);
+      req.user = mapUser(user);
       if (!req.user) {
         return res.status(401).json({ message: 'Session expired or user deleted. Please log out and log in again.' });
       }

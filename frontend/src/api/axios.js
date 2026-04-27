@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { apiBaseURL } from '../config';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: apiBaseURL,
 });
 
 // Add Interceptor for Token

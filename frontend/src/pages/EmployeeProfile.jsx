@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import API from '../api/axios';
+import { assetUrl } from '../utils/assetUrl';
 import { Phone, Mail, MapPin, Calendar, Briefcase, FileText, Download, UserCircle, Loader2 } from 'lucide-react';
 
 const EmployeeProfile = ({ userId: propsUserId }) => {
@@ -26,7 +27,7 @@ const EmployeeProfile = ({ userId: propsUserId }) => {
   if (loading) return <div className="flex h-screen items-center justify-center"><Loader2 className="w-10 h-10 animate-spin text-primary" /></div>;
   if (!profile) return <div className="text-center p-10 text-slate-400">Profile Not Found</div>;
 
-  const photoUrl = profile.profilePhoto ? `http://localhost:5000/${profile.profilePhoto}` : null;
+  const photoUrl = assetUrl(profile.profilePhoto);
 
   return (
     <div className="p-6 max-w-6xl mx-auto animate-fade-in">
@@ -101,7 +102,7 @@ const EmployeeProfile = ({ userId: propsUserId }) => {
                     <div className="p-2 bg-slate-700/50 rounded-lg shrink-0"><FileText className="w-5 h-5 text-slate-400 group-hover:text-primary-light" /></div>
                     <span className="text-sm font-medium text-slate-300 truncate">{doc.title}</span>
                   </div>
-                  <a href={`http://localhost:5000/${doc.path}`} download target="_blank" className="p-2 hover:bg-primary/20 rounded-lg transition-colors">
+                  <a href={assetUrl(doc.path) || '#'} download target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-primary/20 rounded-lg transition-colors">
                     <Download className="w-4 h-4 text-slate-400 hover:text-primary-light" />
                   </a>
                 </div>

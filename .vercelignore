@@ -1,0 +1,13 @@
+# Keep CLI / Git deploy uploads small — dependencies install on Vercel.
+node_modules
+**/node_modules
+.git
+.vercel
+backend/local_mongo_db
+public
+.DS_Store
+*.log
+.env
+**/.env
+.env.*
+**/.env.*

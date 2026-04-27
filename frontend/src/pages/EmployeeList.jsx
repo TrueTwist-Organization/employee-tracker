@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import API from '../api/axios';
+import { assetUrl } from '../utils/assetUrl';
 import { Users, Mail, Phone, Briefcase, MapPin, Search, Loader2, Eye, Edit, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -72,7 +73,7 @@ const EmployeeList = () => {
           <h1 className="text-3xl font-bold text-white flex items-center gap-3">
             <Users className="text-primary w-8 h-8" /> Employee Records
           </h1>
-          <p className="text-slate-400 mt-1">Manage and view all registered staff members stored in MongoDB.</p>
+          <p className="text-slate-400 mt-1">Manage and view all registered staff members stored in Supabase.</p>
         </div>
         
         <div className="relative group">
@@ -145,7 +146,7 @@ const EmployeeList = () => {
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-lg shadow-primary/5 overflow-hidden">
                           {emp.profilePhoto ? (
-                            <img src={`http://localhost:5000/${emp.profilePhoto}`} alt="" className="w-full h-full object-cover" />
+                            <img src={assetUrl(emp.profilePhoto) || ''} alt="" className="w-full h-full object-cover" />
                           ) : (
                             <Users className="w-6 h-6 text-primary" />
                           )}
@@ -207,7 +208,7 @@ const EmployeeList = () => {
                <Users className="w-8 h-8 text-slate-600" />
             </div>
             <h3 className="text-lg font-bold text-white mb-1">No Employees Found</h3>
-            <p className="text-slate-500 max-w-xs mx-auto">We couldn't find any employees matching your search criteria in MongoDB.</p>
+            <p className="text-slate-500 max-w-xs mx-auto">We couldn't find any employees matching your search criteria in Supabase.</p>
           </div>
         )}
       </div>

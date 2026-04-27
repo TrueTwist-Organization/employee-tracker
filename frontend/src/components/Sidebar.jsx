@@ -10,7 +10,8 @@ import {
   FileText,
   ChevronRight,
   UserCircle,
-  ClipboardList
+  ClipboardList,
+  Settings
 } from 'lucide-react';
 
 export const Sidebar = () => {
@@ -24,6 +25,7 @@ export const Sidebar = () => {
     { name: 'Attendance', path: '/admin/attendance', icon: Calendar },
     { name: 'Leaves', path: '/admin/leaves', icon: ClipboardList },
     { name: 'Salary Units', path: '/admin/salary', icon: IndianRupee },
+    { name: 'Settings', path: '/admin/settings', icon: Settings },
   ];
 
   const employeeLinks = [
@@ -31,6 +33,7 @@ export const Sidebar = () => {
     { name: 'Profile', path: '/employee/profile', icon: UserCircle },
     { name: 'Leaves', path: '/employee/leaves', icon: ClipboardList },
     { name: 'Salary Slips', path: '/employee/salary', icon: FileText },
+    { name: 'Settings', path: '/employee/settings', icon: Settings },
   ];
 
   const links = user?.role === 'admin' ? adminLinks : employeeLinks;

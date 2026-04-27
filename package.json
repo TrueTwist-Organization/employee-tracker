@@ -1,12 +1,21 @@
 {
   "name": "minihr-web",
   "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
-    "dev": "npx concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+    "dev": "npx concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build": "cd frontend && npm run build && cd .. && rm -rf public && mkdir -p public && cp -r frontend/dist/. public/"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "serverless-http": "^3.2.0"
   }
 }
